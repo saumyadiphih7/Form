@@ -315,7 +315,7 @@ export const getSingleUser = async (req, res) => {
 export const updateSingleUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { fname, lname, email, age, dob, phone ,password} = req.body;
+    let { fname, lname, email, age, dob, phone ,password} = req.body;
 
     //check if user exists
     const user = await userModel.findById(userId);
@@ -334,6 +334,26 @@ export const updateSingleUser = async (req, res) => {
     if (password) {
       hashedPassword = await bcrypt.hash(password, 10);
     }
+
+    if (!fname) {
+      fname = user.fname;
+    }
+    if (!lname) {
+      lname = user.lname;
+    }
+    if (!email) {
+      email = user.email;
+    }
+    if (!age) {
+      age = user.age;
+    }
+    if (!dob) {
+      dob = user.dob;
+    }
+    if (!phone) {
+      phone = user.phone;
+    }
+
 
     //update user profile
     const updatedUser = await userModel

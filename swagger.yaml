@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: Form
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    noauthAuth:
+      type: http
+      scheme: noauth
+tags:
+  - name: base
+  - name: auth
+  - name: users
+paths:
+  /:
+    get:
+      tags:
+        - base
+      summary: base
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/login:
+    post:
+      tags:
+        - auth
+      summary: user login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                fname:
+                  type: string
+                  example: Saumyadip
+                lname:
+                  type: string
+                  example: Dutta
+                email:
+                  type: string
+                  example: saumyadipdutta.07@gmail.com
+                password:
+                  type: integer
+                  example: "123456"
+                age:
+                  type: integer
+                  example: "24"
+                dob:
+                  type: string
+                  example: 07-08-2000
+                phone:
+                  type: integer
+                  example: "9007080729"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/register:
+    post:
+      tags:
+        - auth
+      summary: user register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                fname:
+                  type: string
+                  example: "{{$randomFirstName}}"
+                lname:
+                  type: string
+                  example: "{{$randomLastName}}"
+                email:
+                  type: string
+                  example: "{{$randomEmail}}"
+                password:
+                  type: integer
+                  example: "123456"
+                age:
+                  type: string
+                  example: "{{$randomInt}}"
+                dob:
+                  type: string
+                  example: "2020-04-12"
+                phone:
+                  type: string
+                  example: "{{$randomPhoneNumber}}"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/profile:
+    get:
+      tags:
+        - auth
+      summary: get profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/profile/update:
+    put:
+      tags:
+        - auth
+      summary: update profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                age:
+                  type: integer
+                  example: "25"
+                phone:
+                  type: integer
+                  example: "1234567891"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/profile/delete:
+    delete:
+      tags:
+        - auth
+      summary: delete profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/all-users:
+    get:
+      tags:
+        - users
+      summary: get-all-user
+      security:
+        - noauthAuth: []
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+          example: "1998-01-01"
+        - name: endDate
+          in: query
+          schema:
+            type: string
+          example: "2001-10-10"
+        - name: minAge
+          in: query
+          schema:
+            type: integer
+          example: "20"
+        - name: maxAge
+          in: query
+          schema:
+            type: integer
+          example: "35"
+        - name: search
+          in: query
+          schema:
+            type: string
+          example: name
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/get-single-user/{id}:
+    get:
+      tags:
+        - users
+      summary: get-single-user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/update-single-user/{id}:
+    put:
+      tags:
+        - users
+      summary: update-single-user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                phone:
+                  type: integer
+                  example: "1112223334"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user/delete-single-user/{id}:
+    delete:
+      tags:
+        - users
+      summary: delete single user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
